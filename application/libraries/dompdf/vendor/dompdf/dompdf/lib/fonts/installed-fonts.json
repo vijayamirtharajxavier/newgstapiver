@@ -1,0 +1,12 @@
+{
+    "glyphicons halflings": {
+        "normal": "glyphicons_halflings_normal_4ced20531a4f462a8c5c535d4debd2eb"
+    },
+    "font awesome 5 brands": {
+        "normal": "font_awesome_5_brands_normal_add455c183da7b8b79939fdd543b2e8f"
+    },
+    "font awesome 5 free": {
+        "normal": "\/home2\/azsuppor\/software\/newgstapiver\/application\/libraries\/dompdf\/vendor\/dompdf\/dompdf\/lib\/fonts\/font_awesome_5_free_normal_65f03b2545b130d267f19f5af6de9ea8",
+        "900": "font_awesome_5_free_900_5c827474bc4ebdf58b1da89b2bffcc6d"
+    }
+}
