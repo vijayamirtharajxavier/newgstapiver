@@ -842,6 +842,70 @@ $output = json_encode($finalmerge,JSON_NUMERIC_CHECK | JSON_UNESCAPED_SLASHES | 
 
 }
 
+public function gstr9b2bJson()
+{
+
+//  $flag = $this->input->get('flag');
+
+$comp_gstin = $this->session->userdata('gstin');
+$stype = $this->input->get('stype');
+  $compId = $this->session->userdata('id');
+  $yr=$this->input->get('yr');
+  $exp_yr = explode("-",$yr);
+  $fy_yr = intval($exp_yr[0])+1;
+  $fp_yr = "03" . $fy_yr;
+  $finyear = explode("-", $this->session->userdata('finyear'));
+  $url= $this->config->item("api_url") . "/api/reports/getgstr9jsondata";
+  $data_post = array("type"=>$stype,"yr"=>$yr,"compId"=>$compId,"gtype"=>$stype,"comp_gstin"=>$comp_gstin,"fp"=>$fp_yr);
+  
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL,$url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data_post));
+  
+    $gstr9jsonresponse = curl_exec($ch);
+    //$result = json_decode($response);
+   //echo $ledgerresponse;
+  //var_dump($gstr1response);
+  curl_close($ch); // Close the connection
+  $gst1maindata = json_decode($gstr9jsonresponse,true);
+  echo $gstr9jsonresponse;
+  
+ 
+  
+}
+
+
+
+public function fetch_gstr9b2b()
+{
+  $stype = $this->input->get('stype');
+  $compId = $this->session->userdata('id');
+  $yr=$this->input->get('yr');
+  $finyear = explode("-", $this->session->userdata('finyear'));
+  $url= $this->config->item("api_url") . "/api/reports/getgstr9data";
+  $data_post = array("type"=>$stype,"yr"=>$yr,"compId"=>$compId,"gtype"=>$stype);
+  
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL,$url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data_post));
+  
+    $gstr9response = curl_exec($ch);
+    //$result = json_decode($response);
+   //echo $ledgerresponse;
+  //var_dump($gstr1response);
+  curl_close($ch); // Close the connection
+  $gst1maindata = json_decode($gstr9response,true);
+  echo $gstr9response;
+  
+    
+}
+
 
 
 
