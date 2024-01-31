@@ -23,6 +23,13 @@ $this->headers = array(
         $data['page'] = 'Cash / Bank Book';
         $this->load->view('allcashbank', $data);
     }
+    public function gstr9return()
+    {
+        $data = array();
+        $data['page'] = 'GSTR9 Annual Return';
+        $this->load->view('gstr9_annualreturn', $data);
+    }
+
 
     public function payments(){
         $data = array();
@@ -839,6 +846,34 @@ $output = json_encode($finalmerge,JSON_NUMERIC_CHECK | JSON_UNESCAPED_SLASHES | 
   echo $outp;
 
 */
+
+}
+
+
+public function fetch_gstr9hsnsac()
+{
+  $compId = $this->session->userdata('id');
+  $stype = $this->input->get('stype');
+  $yr=$this->input->get('yr');
+  $finyear = explode("-", $this->session->userdata('finyear'));
+  $url= $this->config->item("api_url") . "/api/reports/getgstr9data";
+  $data_post = array("type"=>$stype,"yr"=>$yr,"compId"=>$compId,"gtype"=>"HSNSAC");
+  
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL,$url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data_post));
+  
+    $gstr9response = curl_exec($ch);
+    //$result = json_decode($response);
+   //echo $ledgerresponse;
+  //var_dump($gstr1response);
+  curl_close($ch); // Close the connection
+  $gst1maindata = json_decode($gstr9response,true);
+  echo $gstr9response;
+  
 
 }
 
