@@ -472,7 +472,15 @@ function getSaleslist()
     "ajax"    : url, //+ 'fetchReceiptSearch',
     "destroy":true,
     "sort":false,
-    "columns": [
+    "createdRow": function( row, data, dataIndex ) {
+      if ( data[3] == "SALES ACCOUNT" ) {        
+  $(row).addClass('red');
+
+}
+
+
+},
+            "columns": [
             { "data": "action" },
             { "data": "trans_id" },
             { "data": "trans_date" },
@@ -956,7 +964,10 @@ $.getJSON("getledgerdatabysearch?itemkeyword=" + ui.item.value, function (data, 
 //console.log(data);
           $.map(data, function (value, key) {
 //$("#gstin").val(data.gstin);
- //console.log(data);
+//console.log(data);
+ $("#gstin").val(value['account_gstin']);
+ $("#editgstin").val(value['account_gstin']);
+ 
 });
 
 });              
@@ -996,6 +1007,7 @@ $.getJSON("getledgerdatabysearch?itemkeyword=" + ui.item.value, function (data, 
           $.map(data, function (value, key) {
 
 $("#gstin").val(value['account_gstin']);
+$("#editgstin").val(value['account_gstin']);
 
 var sp = $("#salebyperson").val();
 var vn = $("#customer_name").val().length;

@@ -513,7 +513,8 @@ $tbl .= '</tr>';
 
 $tbl .= '<tr>';
            $f = new NumberFormatter("en", NumberFormatter::SPELLOUT);
-$tbl .= '<td valign="top" colspan="17" rowspan="2"><strong>(Rupees in words) :</strong>Rupees ' . ucwords($f->format(round($tot_amt,2))) . " only". '</td>';
+//$tbl .= '<td valign="top" colspan="17" rowspan="2"><strong>(Rupees in words) :</strong>Rupees ' . ucwords($f->format(round($tot_amt,2))) . " only". '</td>';
+$tbl .= '<td valign="top" colspan="17" rowspan="2"><strong>(Rupees in words) :</strong>Rupees ' . ucwords($f->format($tot_amt)) . " only". '</td>';
 $tbl .= '</tr><tr></tr>';
 $tbl .= '<table id="items" style="margin-top:5px;font-size:12px;"><tr></tr>';
     
@@ -894,7 +895,7 @@ $tbl .= '</tr>';
 
 $tbl .= '<tr>';
            $f = new NumberFormatter("en", NumberFormatter::SPELLOUT);
-$tbl .= '<td valign="top" colspan="17" rowspan="2"><strong>(Rupees in words) :</strong>Rupees ' . ucwords($f->format(round($tot_amt,2))) . " only". '</td>';
+$tbl .= '<td valign="top" colspan="17" rowspan="2"><strong>(Rupees in words) :</strong>Rupees ' . ucwords($f->format($tot_amt)) . " only". '</td>';
 $tbl .= '</tr><tr></tr>';
 $tbl .= '<table id="items" style="margin-top:5px;font-size:12px;"><tr></tr>';
     
@@ -1543,7 +1544,7 @@ $tbl .= '</tr>';
 
 $tbl .= '<tr>';
            $f = new NumberFormatter("en", NumberFormatter::SPELLOUT);
-$tbl .= '<td valign="top" colspan="17" rowspan="2"><strong>(Rupees in words) :</strong>Rupees ' . ucwords($f->format(round($tot_amt,2))) . " only". '</td>';
+$tbl .= '<td valign="top" colspan="17" rowspan="2"><strong>(Rupees in words) :</strong>Rupees ' . ucwords($f->format($tot_amt)) . " only". '</td>';
 $tbl .= '</tr><tr></tr>';
 $tbl .= '<table id="items" style="margin-top:5px;font-size:12px;"><tr></tr>';
     
@@ -1924,7 +1925,7 @@ $tbl .= '</tr>';
 
 $tbl .= '<tr>';
            $f = new NumberFormatter("en", NumberFormatter::SPELLOUT);
-$tbl .= '<td valign="top" colspan="17" rowspan="2"><strong>(Rupees in words) :</strong>Rupees ' . ucwords($f->format(round($tot_amt,2))) . " only". '</td>';
+$tbl .= '<td valign="top" colspan="17" rowspan="2"><strong>(Rupees in words) :</strong>Rupees ' . ucwords($f->format($tot_amt)) . " only". '</td>';
 $tbl .= '</tr><tr></tr>';
 $tbl .= '<table id="items" style="margin-top:5px;font-size:12px;"><tr></tr>';
     
@@ -2475,7 +2476,7 @@ $tbl .= '</tr>';
 
 $tbl .= '<tr>';
            $f = new NumberFormatter("en", NumberFormatter::SPELLOUT);
-$tbl .= '<td valign="top" colspan="17" rowspan="2"><strong>(Rupees in words) :</strong>Rupees ' . ucwords($f->format(round($tot_amt,2))) . " only". '</td>';
+$tbl .= '<td valign="top" colspan="17" rowspan="2"><strong>(Rupees in words) :</strong>Rupees ' . ucwords($f->format($tot_amt)) . " only". '</td>';
 $tbl .= '</tr><tr></tr>';
 $tbl .= '<table id="items" style="margin-top:5px;font-size:12px;"><tr></tr>';
     
@@ -2856,7 +2857,7 @@ $tbl .= '</tr>';
 
 $tbl .= '<tr>';
            $f = new NumberFormatter("en", NumberFormatter::SPELLOUT);
-$tbl .= '<td valign="top" colspan="17" rowspan="2"><strong>(Rupees in words) :</strong>Rupees ' . ucwords($f->format(round($tot_amt,2))) . " only". '</td>';
+$tbl .= '<td valign="top" colspan="17" rowspan="2"><strong>(Rupees in words) :</strong>Rupees ' . ucwords($f->format($tot_amt)) . " only". '</td>';
 $tbl .= '</tr><tr></tr>';
 $tbl .= '<table id="items" style="margin-top:5px;font-size:12px;"><tr></tr>';
     
@@ -3444,13 +3445,14 @@ $url=$this->config->item("api_url") . "/api/invoicetype";
   curl_close($ch); // Close the connection
 //var_dump($invtyperesponse);
 
-
-
+$invoption='';
+if($obj)
+{
 foreach ($obj as $key => $value) {
   # code...
 //  var_dump($value);
 
-$invoption='';
+
 $invdata =  json_decode($invtyperesponse,true);
 
 foreach ($invdata as $key => $invvalue) {
@@ -3513,7 +3515,56 @@ $tbl .='<tr><td colspan="3">Customer<input type="text" class="form-control custn
 */
 
 }
+}
+else
+{
+  $invoption='';
+  $invdata =  json_decode($invtyperesponse,true);
 
+  if($invdata)
+{
+  foreach ($invdata as $key => $invvalue) {
+      
+   $invoption .= '<option value="'. $invvalue['inv_type'].'">'. $invvalue['description'].'</option>';   
+  
+  }
+}
+
+  $url=$this->config->item("api_url") . "/api/salesperson";
+  //$url=$this->config->item("api_url") . "/api/getSalesPerson.php";
+  //$post = ['batch_id'=> "2"];
+  
+  //$data = array("id"=>$actid,"compId"=>$compId);
+  
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL,$url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
+    $salebyresponse = curl_exec($ch);
+    //$result = json_decode($response);
+  //var_dump($data);
+  //var_dump($ldgresponse);
+    curl_close($ch); // Close the connection
+  //var_dump($invtyperesponse);
+  
+  $soption='';
+  $salebydata =  json_decode($salebyresponse,true);
+  if($salebydata)
+  {  
+  foreach ($salebydata as $key => $svalue) {
+      
+   $soption .= '<option value="'. $svalue['id'].'">'. $svalue['sales_person'].'</option>';   
+
+  }
+}
+  $tbl .='<table id="editInvoice" class="table table-bordered">';
+  $tbl .='<tr><td><input type="hidden" id="recid" name="recid" value="' . $id . '"><input type="hidden" id="recid" name="statecode" name="statecode"> Inv.#<input type="text" class="form-control" autocomplete="off"  id="editinvoiceno" name="editinvoiceno"  readonly></td><td>Inv.Date<input type="date" class="form-control" autocomplete="off"  id="editinvdate" name="editinvdate" ></td><td>Order #<input type="text" class="form-control" autocomplete="off" id="editorderno" name="editorderno" ></td><td>Order Date<input type="date" class="form-control" autocomplete="off"  id="editorderdate" name="editorderdate" ></td><td>Sales by<select class="form-control" autocomplete="off" id="editsalebyperson" name="editsalebyperson">'. $soption .'</select> </td></tr>';
+  
+  
+  $tbl .='<tr><td>DC #<input type="text" class="form-control" autocomplete="off"  id="editdcno" name="editdcno"></td><td>DC Date<input type="date" class="form-control" autocomplete="off"  id="editdcdate" name="editdcdate"></td><td>Customer<input type="text" class="form-control custname" autocomplete="off"  id="customer_name" name="customer_name" ></td><td>GSTIN#<input type="text"  class="form-control" autocomplete="off" id="editgstin" name="editgstin"  readonly></td><td>Inv.Type<select  class="form-control" autocomplete="off" id="editinvtype" name="editinvtype" >'. $invoption .'</select> </td></tr>';
+  
+}
 
 $tbl .='</table>';
 

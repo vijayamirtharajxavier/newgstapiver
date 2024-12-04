@@ -20,7 +20,14 @@
 
   <!-- Custom styles for this page -->
   <link href="<?php base_url();?>assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+  <style type="text/css">
+  
+  .red {
+    background-color: red !important;
+  }
+  </style>
+  
+  
 </head>
 
 <body id="page-top">
@@ -544,10 +551,6 @@ $("#delete-product-message").fadeTo(2000, 500).slideUp(500, function(){
 
 </script>
 
-
-<style type="text/css">
-  
-</style>
 
 
 </body>
