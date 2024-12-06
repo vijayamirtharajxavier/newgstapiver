@@ -356,7 +356,9 @@ disval = (amtval*dispc/100);
 console.log('amt'+amtval);
 var gst_amt = Number(txbval*gst_pc/100);
 
-netval = Math.round(Number(txbval+gst_amt));
+//netval = Math.round(Number(txbval+gst_amt));
+
+netval = Number(txbval+gst_amt);
 
 console.log(gst_amt);
 $('#'+curr_row).find('.itemgstamt').val(gst_amt);
@@ -388,7 +390,9 @@ qty=Number($('#'+curr_row).find('.itemqty').val());
 console.log('amt'+amtval);
  gst_amt = Number(txbval*gst_pc/100);
 
- netval = Math.round(Number(txbval+gst_amt));
+// netval = Math.round(Number(txbval+gst_amt));
+ netval = Number(txbval+gst_amt);
+
 
 console.log(netval);
 $('#'+curr_row).find('.itemgstamt').val(gst_amt);
@@ -418,7 +422,8 @@ console.log($("#itemname").text());
 console.log('amt'+amtval);
  gst_amt = Number(txbval*gst_pc/100);
 
- netval = Math.round(Number(txbval+gst_amt));
+ netval = Number(txbval+gst_amt);
+ //netval = Math.round(Number(txbval+gst_amt));
 
 console.log(netval);
 $('#'+curr_row).find('.itemgstamt').val(gst_amt);
@@ -716,7 +721,8 @@ $('.itemnet').each(function(i)
   {
     console.log(i);
     //gst_value = Number($(this).val());
-    netvalue = Math.round(Number($(this).val()));
+    //netvalue = Math.round(Number($(this).val()));
+    netvalue = Number($(this).val());
     
     net_value+=netvalue;
     console.log('nt ' + net_value);

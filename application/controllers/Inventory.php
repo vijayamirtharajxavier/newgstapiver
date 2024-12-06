@@ -5611,7 +5611,7 @@ $igstpc = $itemgstpc[$i];
 $igstamt = ($itemamt[$i]*$igstpc)/100;
 //var_dump($igstpc);
 }
-
+$gst_tot = $gst_tot + $igstamt + $cgstamt + $sgstamt;
 $tax_tot=$tax_tot+$itemamt[$i];
 $net_tot=$net_tot+$itemnet[$i];
 
@@ -5690,6 +5690,7 @@ $data_array=array(
     "salebyperson"=>$salebyperson,
     "inv_type"=>$invtype,
     "trans_amount"=>$tax_tot,
+    "gst_amount"=>$gst_tot,
     "net_amount"=>$net_tot,
     "company_id"=>$compId);
 
